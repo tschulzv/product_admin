@@ -31,3 +31,21 @@ module.exports.createProduct = (req, res) => {
     .then(newProd => res.json({product : newProd}))
     .catch(err => res.json({msg: "ERROR", error: err}));
 }
+
+module.exports.editProduct = (req, res) => {
+    Product.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    .then(updatedProduct => res.json(updatedProduct))
+    .catch(err => console.log(err));
+}
+
+module.exports.deleteProduct = (req, res) => {
+    Product.findByIdAndDelete(req.params.id)
+    .then( deletedProduct => {
+    console.log("Producto borrado con éxito", deletedProduct);
+        res.status(200).json({ message: "Product deleted successfully", deletedProduct });
+    })
+    .catch(err => {
+        console.error("Error deleting product:", err);
+        res.status(500).json({ error: err.message });
+    });
+}

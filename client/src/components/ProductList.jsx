@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default (props) => {
+
     return(
         <>
-            {props.loading ? (<p>Loading...</p>) : (
-            <>
-                {props.list && props.list.map((product, index) => {
-                    console.log('props.list:', props.list);
+            {props.productList && props.productList.map((product, index) => {
+                    console.log('props.list:', props.productList);
                     return (
                         // link contiene el id del producto
                         <p>
-                            <a key={index} href={`http://localhost:3000/products/${product._id}`}>{product.title}</a>
+                            <Link to={`/products/${product._id}`}>{product.title}</Link>
+                            <Link to={`/${product._id}/edit`}> [EDITAR]</Link>
+                            <button onClick={() => props.deleteProduct(product._id)}>Eliminar</button>
+
                         </p>
                     )}
-                )}
-            </>)}
+            )}
         </>
     )
 }

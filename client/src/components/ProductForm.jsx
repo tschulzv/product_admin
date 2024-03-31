@@ -9,9 +9,13 @@ export default (props) => {
     // pasarle a axios
     const handleSubmit = (e) => {
         e.preventDefault();
+        let newProduct = {title, price, description};
         // hacer el contacto con el servidor para crear nuevo producto en la DB
-        axios.post("http://localhost:8000/create", {title, price, description})
-            .then(res => console.log("EXITO!", res))
+        axios.post("http://localhost:8000/create", newProduct)
+            .then(res => { 
+                console.log("PRODUCTO CREADO", res);
+                console.log(newProduct);
+                props.addToDOM(newProduct)})
             .catch(err=>console.log(err));
     }
 
@@ -29,7 +33,7 @@ export default (props) => {
                 <label>Description</label>
                 <input type="text" value={description} onChange={e=>setDescription(e.target.value)}></input>
             </p>            
-            <input type="submit" value="submit."/>
+            <input type="submit" value="Submit"/>
         </form>
     )
 }
